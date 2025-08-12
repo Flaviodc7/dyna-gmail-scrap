@@ -2,12 +2,13 @@ import { scrapHTMLProductsFromRetailer } from '@method/htmlMethod';
 import { scrapApiProductsFromRetailer } from '@method/apiMethod';
 import { scrapFromBrowser } from '@method/browserMethod';
 
-export const handler = async (event: any, _context: any, callback: any) => {
+export const handler = async () => {
   try {
-    // await Promise.all([scrapApiProductsFromRetailer(''), scrapHTMLProductsFromRetailer('')]);
     await scrapFromBrowser();
-    callback(null, 'Dyna scraped successfully');
+    console.log('Scraping completed successfully');
   } catch (error) {
-    callback(error);
+    throw new Error(error);
   }
 };
+
+handler()
