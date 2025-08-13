@@ -1,25 +1,25 @@
 import { BrowserContext } from "@playwright/test";
 
 export const scrapDynatraceBrowser = async (browser: BrowserContext) => {
-  
-  const dyna_url = process.env.MAIN_SITE ?? '';
 
-  const dyna_user = process.env.DYNA_USER ?? '';
+  const dynatrace_url = process.env.DYNATRACE_URL ?? '';
 
-  const dyna_pass = process.env.DYNA_PASS ?? '';
+  const dynatrace_user = process.env.DYNATRACE_USER ?? '';
+
+  const dynatrace_pass = process.env.DYNATRACE_PASS ?? '';
 
   const page = await browser.newPage();
 
-  if (!dyna_url || !dyna_user || !dyna_pass) {
-    throw new Error('MAIN_SITE or DYNA_USER or DYNA_PASS environment variables are not defined');
+  if (!dynatrace_url || !dynatrace_user || !dynatrace_pass) {
+    throw new Error('DYNATRACE_SITE or DYNATRACE_USER or DYNATRACE_PASS environment variables are not defined');
   }
 
-  await page.goto(dyna_url);
+  await page.goto(dynatrace_url);
 
-  await page.getByPlaceholder("Enter your email").pressSequentially(dyna_user, { delay: 200 })
+  await page.getByPlaceholder("Enter your email").pressSequentially(dynatrace_user, { delay: 200 })
 
   await page.getByText('Next').click()
 
-  await page.locator('[id=":rb:"]').pressSequentially(dyna_pass, { delay: 200 });
+  await page.locator('[id=":rb:"]').pressSequentially(dynatrace_pass, { delay: 200 });
 
 };
