@@ -1,9 +1,9 @@
 export const currentTime = () => {
-  const fechaActual = new Date();
+  const currentDate = new Date();
 
-  const hours = fechaActual.getHours();
-  const minutes = fechaActual.getMinutes();
-  const seconds = fechaActual.getSeconds();
+  const hours = currentDate.getHours();
+  const minutes = currentDate.getMinutes();
+  const seconds = currentDate.getSeconds();
 
   const formattedTime =
     hours.toString().padStart(2, '0') +
