@@ -1,6 +1,6 @@
 import { chromium } from '@playwright/test';
-import { scrapDynatraceBrowser } from '@services/dynatrace';
-import { scrapGmailBrowser } from '@services/gmail';
+import { mainDynatrace } from '@services/dynatrace/mainUrl';
+import { inboxGmail } from '@services/gmail/inbox';
 
 export const scrapFromBrowser = async () => {
   const win_user = process.env.WIN_USER ?? '';
@@ -16,10 +16,10 @@ export const scrapFromBrowser = async () => {
       '--disable-infobars',
     ],
   });
-  
-  await scrapDynatraceBrowser(browser)
 
-  await scrapGmailBrowser(browser);
+  await mainDynatrace(browser);
+
+  await inboxGmail(browser);
 
   // await browser.close();
 };
