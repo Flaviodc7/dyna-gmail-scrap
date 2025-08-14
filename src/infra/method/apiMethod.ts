@@ -105,7 +105,11 @@ const getBreadcrumbsData = async (category: string, cookie: string) => {
   }
 };
 
-const processBatchOfProducts = async (batch: string[], cookie: string, retailer: string) => {
+const processBatchOfProducts = async (
+  batch: string[],
+  cookie: string,
+  retailer: string,
+) => {
   const products: ProductScrapingEntity[] = [];
   await Promise.all(
     batch.map(async (productSiteUrl) => {
@@ -114,7 +118,9 @@ const processBatchOfProducts = async (batch: string[], cookie: string, retailer:
         const productData = data.productData;
 
         const breadcrumbs =
-          productData.category !== undefined ? await getBreadcrumbsData(productData.category, cookie) : '';
+          productData.category !== undefined
+            ? await getBreadcrumbsData(productData.category, cookie)
+            : '';
 
         // Edit this part as the retailer needs
         const product = {
@@ -123,7 +129,9 @@ const processBatchOfProducts = async (batch: string[], cookie: string, retailer:
               active: productData.stock > 0 ? 1 : 0,
               expireDate: 0,
               id: productData.id,
-              normalPrice: Number(productData.prices ? productData.prices['price-list'] : 0),
+              normalPrice: Number(
+                productData.prices ? productData.prices['price-list'] : 0,
+              ),
               settlementPrice: Number(productData.prices?.['price-sale'] ?? 0),
               stock: productData.stock,
             },
@@ -137,10 +145,18 @@ const processBatchOfProducts = async (batch: string[], cookie: string, retailer:
           },
           photosURL: [productData.imageGroups[0]?.images[0]?.link ?? ''],
           presentation: productData.format,
-          productBreadcrumbs: breadcrumbs.length ? breadcrumbs.join(' > ') : 'NO BREADCRUMBS',
+          productBreadcrumbs: breadcrumbs.length
+            ? breadcrumbs.join(' > ')
+            : 'NO BREADCRUMBS',
           quantityPerContainer: 1,
-          recommendations: productData.tabs.find((tab: any) => tab.title === 'Recommendations')?.content
-            ? removeHTMLTags(productData.tabs.find((tab: any) => tab.title === 'Recommendations')?.content)
+          recommendations: productData.tabs.find(
+            (tab: any) => tab.title === 'Recommendations',
+          )?.content
+            ? removeHTMLTags(
+                productData.tabs.find(
+                  (tab: any) => tab.title === 'Recommendations',
+                )?.content,
+              )
             : 'NO RECOMMENDATIONS',
           requiresPrescription: productData.prescription ? 1 : 0,
           restrictions: '',
@@ -150,12 +166,15 @@ const processBatchOfProducts = async (batch: string[], cookie: string, retailer:
         };
         products.push(product);
       }
-    })
+    }),
   );
   return products;
 };
 
-async function processProductUrls(allSitesFromSiteMap: string[], retailer: string) {
+async function processProductUrls(
+  allSitesFromSiteMap: string[],
+  retailer: string,
+) {
   const ProductRepository = new ProductScrapingMongoRepository();
   const batches = splitArray(allSitesFromSiteMap, 20);
   const cookie = await getCookies();

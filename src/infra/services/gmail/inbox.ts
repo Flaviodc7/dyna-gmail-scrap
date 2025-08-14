@@ -1,11 +1,10 @@
-import { BrowserContext } from "@playwright/test";
-import { checkEnvsGmail } from "@utils/gmail/checkGmailEnvs";
-import { checkLoginGmail } from "./checkLogin";
-import { sendEmailGmail } from "./sendEmail";
+import { BrowserContext } from '@playwright/test';
+import { checkEnvsGmail } from '@utils/gmail/checkGmailEnvs';
+import { checkLoginGmail } from './checkLogin';
+import { sendEmailGmail } from './sendEmail';
 
 export const inboxGmail = async (browser: BrowserContext) => {
-
-   const { gmail_inbox_url } = checkEnvsGmail();
+  const { gmail_inbox_url } = checkEnvsGmail();
 
   const page = await browser.newPage();
 
@@ -16,5 +15,4 @@ export const inboxGmail = async (browser: BrowserContext) => {
   await checkLoginGmail(page);
 
   await sendEmailGmail(page);
-
 };

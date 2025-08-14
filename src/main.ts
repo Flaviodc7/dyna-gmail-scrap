@@ -11,4 +11,4 @@ export const handler = async () => {
   }
 };
 
-handler()
+handler();

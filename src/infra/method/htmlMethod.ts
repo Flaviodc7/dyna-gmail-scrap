@@ -15,7 +15,8 @@ const getData = async (url: string) => {
     maxBodyLength: Infinity,
     url,
     headers: {
-      accept: 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8',
+      accept:
+        'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8',
 
       // Add cookies as needed
     },
@@ -51,7 +52,10 @@ const processBatchOfProducts = async (batch: string[], retailer: string) => {
         if (productData !== 'Not match found') {
           const breadcrumbs =
             $('ol[class="breadcrumb d-flex align-items-center"] li').length > 1
-              ? $('ol[class="breadcrumb d-flex align-items-center"] li').slice(0, -1)
+              ? $('ol[class="breadcrumb d-flex align-items-center"] li').slice(
+                  0,
+                  -1,
+                )
               : 'NO BREADCRUMBS';
 
           const breadcrumbText =
@@ -66,19 +70,31 @@ const processBatchOfProducts = async (batch: string[], retailer: string) => {
 
           const oldPrice = Number(
             $("div[class='col-lg-4 col-sm-12'] del span[class='value']").length
-              ? $("div[class='col-lg-4 col-sm-12'] del span[class='value']").attr('content')
-              : $("div[class='col-lg-4 col-sm-12'] span[class*='value']").attr('content')
+              ? $(
+                  "div[class='col-lg-4 col-sm-12'] del span[class='value']",
+                ).attr('content')
+              : $("div[class='col-lg-4 col-sm-12'] span[class*='value']").attr(
+                  'content',
+                ),
           );
 
           // Edit this part as you need
           const product = {
             batchs: [
               {
-                active: Number($("div[class='col-lg-4 col-sm-12'] span[class*='value']").attr('content')),
+                active: Number(
+                  $(
+                    "div[class='col-lg-4 col-sm-12'] span[class*='value']",
+                  ).attr('content'),
+                ),
                 expireDate: 0,
                 id: productData.sku,
                 normalPrice: oldPrice,
-                settlementPrice: Number($("div[class='col-lg-4 col-sm-12'] span[class*='value']").attr('content')),
+                settlementPrice: Number(
+                  $(
+                    "div[class='col-lg-4 col-sm-12'] span[class*='value']",
+                  ).attr('content'),
+                ),
                 stock: Number(''),
               },
             ],
@@ -103,12 +119,15 @@ const processBatchOfProducts = async (batch: string[], retailer: string) => {
           products.push(product);
         }
       }
-    })
+    }),
   );
   return products;
 };
 
-async function processProductUrls(allSitesFromSiteMap: string[], retailer: string) {
+async function processProductUrls(
+  allSitesFromSiteMap: string[],
+  retailer: string,
+) {
   const ProductRepository = new ProductScrapingMongoRepository();
   const batches = splitArray(allSitesFromSiteMap, 10);
   for (const batch of batches) {

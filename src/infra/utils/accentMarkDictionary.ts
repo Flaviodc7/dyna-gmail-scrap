@@ -24,7 +24,7 @@ export const removeHTMLTags = (input: string) => {
     .replace(/\n+/g, ' ')
     .replace(
       /&[aeiou]acute;|&[AEIOU]acute;|&bull;|&ntilde;|&iquest;|&gt;|&deg;/g,
-      (match) => accentMarkDictionary[match]
+      (match) => accentMarkDictionary[match],
     )
     .trim();
 };

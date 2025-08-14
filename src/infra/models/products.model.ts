@@ -35,13 +35,13 @@ const ProductSchema = new Schema(
   },
   {
     timestamps: true,
-  }
+  },
 );
 
 const ProductScrapingModel = model(
   'ProductScraping',
   ProductSchema,
-  process.env.PRODUCT_SCRAPING ?? 'productos_scraping_cruzverde'
+  process.env.PRODUCT_SCRAPING ?? 'productos_scraping_cruzverde',
 );
 
 export default ProductScrapingModel;

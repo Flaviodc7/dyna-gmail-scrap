@@ -1,20 +1,15 @@
-import { BrowserContext } from "@playwright/test";
-import { checkLoginGmail } from "@services/gmail/checkLogin";
-import { sendEmailGmail } from "@services/gmail/sendEmail";
-import { checkEnvsGmail } from "@utils/gmail/checkGmailEnvs";
-import { checkLoginDynatrace } from "./checkLogin";
+import { BrowserContext } from '@playwright/test';
+import { checkLoginDynatrace } from './checkLogin';
+import { checkEnvsDynatrace } from '@utils/dynatrace/checkDynatraceEnvs';
 
 export const mainDynatrace = async (browser: BrowserContext) => {
-
-   const { gmail_inbox_url } = checkEnvsGmail();
+  const { dynatrace_url } = checkEnvsDynatrace();
 
   const page = await browser.newPage();
 
-  await page.goto(gmail_inbox_url);
+  await page.goto(dynatrace_url);
 
   await page.waitForTimeout(10000);
 
   await checkLoginDynatrace(page);
-
-
 };

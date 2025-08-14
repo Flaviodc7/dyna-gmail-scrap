@@ -2,16 +2,26 @@ import { ProductScrapingEntity } from '@modules/scrapingProducts/domain/productS
 import { ProductScrapingRepository } from '@modules/scrapingProducts/domain/productScraping.repository';
 import ProductScrapingModel from '@models/products.model';
 
-export class ProductScrapingMongoRepository implements ProductScrapingRepository {
-  insertProducts = async (productos: ProductScrapingEntity[]): Promise<ProductScrapingEntity[]> => {
+export class ProductScrapingMongoRepository
+  implements ProductScrapingRepository
+{
+  insertProducts = async (
+    productos: ProductScrapingEntity[],
+  ): Promise<ProductScrapingEntity[]> => {
     const updatedProducts: ProductScrapingEntity[] = [];
     try {
       for (const producto of productos) {
-        const result = await ProductScrapingModel.findOneAndUpdate({ sku: producto.sku }, producto, {
-          new: true,
-          upsert: true,
-        });
-        console.log(`Product insert/update successful: ${JSON.stringify(result)}`);
+        const result = await ProductScrapingModel.findOneAndUpdate(
+          { sku: producto.sku },
+          producto,
+          {
+            new: true,
+            upsert: true,
+          },
+        );
+        console.log(
+          `Product insert/update successful: ${JSON.stringify(result)}`,
+        );
         if (result !== null) {
           updatedProducts.push(result.toObject() as ProductScrapingEntity);
         }
