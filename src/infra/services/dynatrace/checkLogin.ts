@@ -1,4 +1,4 @@
-import { BrowserContext, Page } from '@playwright/test';
+import { Page } from '@playwright/test';
 import { checkEnvsDynatrace } from '@utils/dynatrace/checkDynatraceEnvs';
 
 export const checkLoginDynatrace = async (page: Page) => {
