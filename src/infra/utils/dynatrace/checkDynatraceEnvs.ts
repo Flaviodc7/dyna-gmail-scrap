@@ -5,9 +5,16 @@ export const checkEnvsDynatrace = () => {
 
   const dynatrace_pass = process.env.DYNATRACE_PASS ?? '';
 
-  if (!dynatrace_url || !dynatrace_user || !dynatrace_pass) {
+  const dynatrace_dashboard_url = process.env.DYNATRACE_DASHBOARD_URL ?? '';
+
+  if (
+    !dynatrace_url ||
+    !dynatrace_user ||
+    !dynatrace_pass ||
+    !dynatrace_dashboard_url
+  ) {
     throw new Error(
-      'DYNATRACE_URL or DYNATRACE_USER or DYNATRACE_PASS environment variables are not defined',
+      'DYNATRACE_URL or DYNATRACE_USER or DYNATRACE_PASS or DYNATRACE_DASHBOARD_URL environment variables are not defined',
     );
   }
 
@@ -15,5 +22,6 @@ export const checkEnvsDynatrace = () => {
     dynatrace_url,
     dynatrace_user,
     dynatrace_pass,
+    dynatrace_dashboard_url,
   };
 };
