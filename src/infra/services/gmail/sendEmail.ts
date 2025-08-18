@@ -9,6 +9,8 @@ export const sendEmailGmail = async (page: Page) => {
 
   await page.locator('div[jsaction="click:dlrqf; clickmod:dlrqf"]').click();
 
+  await page.waitForTimeout(5000);
+
   await page
     .locator('input[aria-label="Destinatarios en Para"]')
     .pressSequentially(destination_emails, { delay: 200 });
