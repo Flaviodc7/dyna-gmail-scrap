@@ -1,16 +1,13 @@
 export const currentTime = () => {
-  const currentDate = new Date();
+  const now = new Date();
 
-  const hours = currentDate.getHours();
-  const minutes = currentDate.getMinutes();
-  const seconds = currentDate.getSeconds();
+  const year = now.getFullYear();
+  const month = String(now.getMonth() + 1).padStart(2, '0');
+  const day = String(now.getDate()).padStart(2, '0');
 
-  const formattedTime =
-    hours.toString().padStart(2, '0') +
-    ':' +
-    minutes.toString().padStart(2, '0') +
-    ':' +
-    seconds.toString().padStart(2, '0');
+  const hours = String(now.getHours()).padStart(2, '0');
+  const minutes = String(now.getMinutes()).padStart(2, '0');
+  const seconds = String(now.getSeconds()).padStart(2, '0');
 
-  return formattedTime;
+  return `${year}-${month}-${day}_${hours}-${minutes}-${seconds}`;
 };
