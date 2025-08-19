@@ -3,7 +3,11 @@ export const checkGlobalEnvs = () => {
 
   const screenshot_path = process.env.IMAGE_PATH ?? '';
 
-  if (!win_user || !screenshot_path) {
+  const initial_time = process.env.INITIAL_TIME ?? '';
+
+  const final_time = process.env.FINAL_TIME ?? '';
+
+  if (!win_user || !screenshot_path || !initial_time || !final_time) {
     throw new Error(
       'WIN_USER or IMAGE_PATH environment variable is not defined',
     );
@@ -12,5 +16,7 @@ export const checkGlobalEnvs = () => {
   return {
     win_user,
     screenshot_path,
+    initial_time,
+    final_time,
   };
 };
