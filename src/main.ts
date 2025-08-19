@@ -1,14 +1,17 @@
-import { scrapHTMLProductsFromRetailer } from '@method/htmlMethod';
-import { scrapApiProductsFromRetailer } from '@method/apiMethod';
 import { scrapFromBrowser } from '@method/browserMethod';
+import { checkWeekendHolidayTimeSchedule } from '@utils/checkWeekendHolidayTimeSchedule';
+import cron from 'node-cron';
 
 export const handler = async () => {
-  try {
-    await scrapFromBrowser();
-    console.log('Scraping completed successfully');
-  } catch (error) {
-    throw new Error(error);
-  }
+  // the '* * * * *' into the cron expression is to check every minute
+  cron.schedule('* * * * *', async () => {
+    if (checkWeekendHolidayTimeSchedule()) {
+      //   const minutes = new Date().getMinutes();
+      //   await scrapFromBrowser(minutes);
+    } else {
+      console.log('Fuera de franja horaria');
+    }
+  });
 };
 
 handler();
